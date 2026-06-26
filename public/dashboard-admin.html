@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin Mercado</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+
+    <header class="navbar">
+        <div class="navbar-content">
+            <h2>📦 Marthada Admin</h2>
+            <button id="logoutBtn" class="btn-text">Sair</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div class="welcome-header">
+            <h1>Olá, Agatha!</h1>
+            <p>Aqui está o resumo do seu catálogo hoje.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="admin-card">
+                <div class="stat-container">
+                    <p class="stat-label">Produtos cadastrados</p>
+                    <h3 class="stat-number" id="totalProducts">--</h3>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="lista-produtos.html" class="btn btn-primary">Ver Produtos</a>
+                    <a href="novo-produto.html" class="btn btn-outline">Novo Produto</a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3>Últimos produtos cadastrados</h3>
+                <ul class="recent-products-list" id="recentList">
+                    <li class="loading-text">Carregando produtos...</li>
+                    </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

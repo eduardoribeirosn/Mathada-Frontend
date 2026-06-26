@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Marthada</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            
+            <!-- Logo do Marthada -->
+            <div class="logo-container">
+                <h2>📦 Marthada Admin</h2>
+            </div>
+
+            <!-- Formulário -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="admin@marthada.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="loginBtn">Entrar</button>
+            </form>
+
+            <!-- Mensagem de Erro (escondida por padrão) -->
+            <p id="errorMessage" class="error-text" style="display: none;">Email ou senha inválidos.</p>
+
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

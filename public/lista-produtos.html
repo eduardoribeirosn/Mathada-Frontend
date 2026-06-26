@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Admin Mercado</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+
+    <header class="navbar">
+        <div class="navbar-content">
+            <h2><a href="dashboard-admin.html" style="text-decoration: none; color: inherit;">📦 Marthada Admin</a></h2>
+            <button id="logoutBtn" class="btn-text">Sair</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div class="admin-card">
+            <div class="card-header-flex">
+                <h2>Produtos</h2>
+                <a href="novo-produto.html" class="btn btn-primary">Novo Produto</a>
+            </div>
+
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Preço Normal</th>
+                            <th>Preço Promoção</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <tr>
+                            <td colspan="4" class="loading-text text-center" style="padding: 20px;">Carregando produtos...</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/lista-produtos.js"></script>
+</body>
+</html>

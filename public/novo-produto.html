@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Produto - Admin Mercado</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+
+    <header class="navbar">
+        <div class="navbar-content">
+            <h2><a href="dashboard-admin.html" style="text-decoration: none; color: inherit;">📦 Marthada Admin</a></h2>
+            <button id="logoutBtn" class="btn-text">Sair</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div class="admin-card form-card">
+            <div class="card-header-flex">
+                <h2>Cadastrar Novo Produto</h2>
+                <a href="lista-produtos.html" class="btn btn-outline btn-sm">Voltar para Lista</a>
+            </div>
+
+            <form id="productForm">
+                
+                <div class="form-grid">
+                    <div class="form-column">
+                        <div class="input-group">
+                            <label for="name">Nome do Produto *</label>
+                            <input type="text" id="name" required placeholder="Ex: Arroz Agulhinha 5kg">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="description">Descrição</label>
+                            <textarea id="description" rows="4" placeholder="Detalhes do produto..."></textarea>
+                        </div>
+
+                        <div class="price-grid">
+                            <div class="input-group">
+                                <label for="price">Preço Normal (R$) *</label>
+                                <input type="number" id="price" step="0.01" min="0" required placeholder="0.00">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="promoPrice">Preço Promocional (R$)</label>
+                                <input type="number" id="promoPrice" step="0.01" min="0" placeholder="0.00" disabled>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group inline-checkbox">
+                            <input type="checkbox" id="promoActive">
+                            <label for="promoActive">Ativar preço promocional neste produto</label>
+                        </div>
+                    </div>
+
+                    <div class="form-column">
+                        
+                        <div class="input-group">
+                            <label>Categorias *</label>
+                            <div class="categories-box" id="categoriesContainer">
+                                <span class="loading-text">Carregando categorias...</span>
+                                </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Imagem do Produto</label>
+                            <div class="file-upload-zone" onclick="document.getElementById('imageUpload').click()">
+                                <span>📸 Clique para escolher uma foto</span>
+                                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                            </div>
+                            <p id="fileName" class="file-name-hint"></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="saveBtn">Salvar Produto</button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+
+    <script src="js/novo-produto.js"></script>
+</body>
+</html>
