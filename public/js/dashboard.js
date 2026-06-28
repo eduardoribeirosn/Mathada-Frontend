@@ -3,48 +3,67 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarDadosDoDashboard();
 });
 
+// Adicione isso no topo do seu dashboard.js
+const formatarMoeda = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+});
+
+// ... resto do seu código ...
+
 async function carregarDadosDoDashboard() {
     const totalProductsElement = document.getElementById('totalProducts');
     const recentListElement = document.getElementById('recentList');
 
     try {
-        // 1. Busca os dados na sua API (Ajuste a porta se necessário)
         const response = await fetch('http://localhost:5150/api/v1/products');
         
-        if (!response.ok) {
-            throw new Error('Falha ao buscar produtos');
-        }
+        if (!response.ok) throw new Error('Falha ao buscar produtos');
 
-        // Converte a resposta do C# para um Array de Objetos no JS
         const products = await response.json();
 
-        // 2. Atualiza o contador de produtos
         totalProductsElement.textContent = products.length;
-
-        // 3. Renderiza os últimos produtos
-        recentListElement.innerHTML = ''; // Limpa o "Carregando..."
+        recentListElement.innerHTML = ''; 
 
         if (products.length === 0) {
-            recentListElement.innerHTML = '<li>Nenhum produto cadastrado ainda.</li>';
+            recentListElement.innerHTML = '<li style="justify-content: center; color: #6B7280;">Nenhum produto cadastrado ainda.</li>';
             return;
         }
 
-        // Pega apenas os 3 últimos produtos do array
-        // (Assumindo que a API retorna os mais novos por último. Se não, use .reverse() ou ordene no C#)
         const ultimosProdutos = products.slice(-3).reverse(); 
 
-        // Cria a <li> no HTML para cada produto
         ultimosProdutos.forEach(produto => {
             const li = document.createElement('li');
-            // Aqui usamos crases (Template Literals) para misturar string e variáveis facilmente
-            li.textContent = `- ${produto.name}`; 
+            
+            // 1. Lógica da Imagem (Pequena)
+            let imagemHTML = produto.image 
+                ? `<img src="${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
+                // ? `<img src="http://localhost:5150/api/v1/${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
+                : `<div class="recent-product-thumb">📦</div>`;
+
+            // 2. Lógica do Preço (Mostra o de promoção se estiver ativo)
+            let precoExibido = produto.price;
+            let classePreco = 'recent-product-price';
+            
+            if (produto.promotionalIsActive && produto.promocionalPrice > 0) {
+                precoExibido = produto.promocionalPrice;
+                classePreco += ' promo'; // Adiciona a classe vermelha
+            }
+
+            // 3. Monta a nova estrutura visual
+            li.innerHTML = `
+                ${imagemHTML}
+                <div class="recent-product-name" title="${produto.name}">${produto.name}</div>
+                <div class="${classePreco}">${formatarMoeda.format(precoExibido)}</div>
+            `;
+            
             recentListElement.appendChild(li);
         });
 
     } catch (error) {
         console.error('Erro:', error);
         totalProductsElement.textContent = "Erro";
-        recentListElement.innerHTML = '<li class="error-text">Não foi possível carregar os produtos. Verifique se a API está rodando.</li>';
+        recentListElement.innerHTML = '<li style="justify-content: center; color: red;">Não foi possível carregar os produtos.</li>';
     }
 }
 

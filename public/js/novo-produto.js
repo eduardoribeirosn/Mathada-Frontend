@@ -104,8 +104,8 @@ document.getElementById('productForm').addEventListener('submit', async function
     }
 });
 
-// Lógica básica de Logout
+// Lógica básica para voltar ao menu
 document.getElementById('logoutBtn').addEventListener('click', () => {
     // No futuro, aqui você apagaria o JWT: localStorage.removeItem('token');
-    window.location.href = 'login.html'; // Volta para o login
+    window.location.href = 'dashboard-admin.html'; // Volta para a dashboard inicial
 });
