@@ -37,8 +37,8 @@ async function carregarDadosDoDashboard() {
             
             // 1. Lógica da Imagem (Pequena)
             let imagemHTML = produto.image 
-                ? `<img src="${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
-                // ? `<img src="http://localhost:5150/api/v1/${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
+                // ? `<img src="${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
+                ? `<img src="http://localhost:5150${produto.image}" alt="${produto.name}" class="recent-product-thumb">`
                 : `<div class="recent-product-thumb">📦</div>`;
 
             // 2. Lógica do Preço (Mostra o de promoção se estiver ativo)

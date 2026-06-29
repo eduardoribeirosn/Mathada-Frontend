@@ -1,8 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-    carregarCategorias();
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Pega o ID da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    if (!productId) {
+        alert("Produto não encontrado!");
+        window.location.href = 'lista-produtos.html';
+        return;
+    }
+
+    // Carrega as categorias primeiro para poder marcá-las depois
+    await carregarCategorias();
+    
+    // Carrega os dados do produto específico
+    await carregarDadosDoProduto(productId);
 });
 
-// 1. Lógica do Toggle de Promoção
+// Lógica visual do Toggle de Promoção (Igual ao cadastro)
 const promoActiveCheckbox = document.getElementById('promoActive');
 const promoPriceInput = document.getElementById('promoPrice');
 
@@ -13,32 +27,23 @@ promoActiveCheckbox.addEventListener('change', function() {
     } else {
         promoPriceInput.disabled = true;
         promoPriceInput.required = false;
-        promoPriceInput.value = ''; // Limpa o valor se desativar
     }
 });
 
-// 2. Lógica visual do Input de Arquivo
-const imageUpload = document.getElementById('imageUpload');
-const fileNameHint = document.getElementById('fileName');
-
-imageUpload.addEventListener('change', function() {
+// Lógica visual do Arquivo
+document.getElementById('imageUpload').addEventListener('change', function() {
     if (this.files && this.files.length > 0) {
-        fileNameHint.textContent = `Arquivo selecionado: ${this.files[0].name}`;
-    } else {
-        fileNameHint.textContent = '';
+        document.getElementById('fileName').textContent = `Nova imagem: ${this.files[0].name}`;
     }
 });
 
-// 3. Buscar Categorias da API
 async function carregarCategorias() {
     const container = document.getElementById('categoriesContainer');
     try {
-        // Você precisará criar esse endpoint GET /categories no seu C# depois
         const response = await fetch('http://localhost:5150/api/v1/category');
         const categories = await response.json();
         
-        container.innerHTML = ''; // Limpa o "carregando"
-
+        container.innerHTML = ''; 
         categories.forEach(cat => {
             container.innerHTML += `
                 <div class="checkbox-group">
@@ -52,21 +57,66 @@ async function carregarCategorias() {
     }
 }
 
-// 4. Enviar o Formulário
+async function carregarDadosDoProduto(id) {
+    try {
+        const response = await fetch(`http://localhost:5150/api/v1/products/${id}`);
+        if (!response.ok) throw new Error('Produto não encontrado');
+        
+        const produto = await response.json();
+
+        // Preenche os campos de texto e número
+        document.getElementById('name').value = produto.name;
+        document.getElementById('description').value = produto.description || '';
+        document.getElementById('price').value = produto.price;
+
+        // Lógica da Promoção
+        if (produto.promotionalIsActive) {
+            promoActiveCheckbox.checked = true;
+            promoPriceInput.disabled = false;
+            promoPriceInput.required = true;
+        }
+        promoPriceInput.value = produto.promotionalPrice;
+        
+        console.log(produto)
+        // Marca as categorias que o produto já tem
+        // (Assumindo que a API retorna um array 'categoryIds' com os IDs das categorias)
+        // if (produto.categoryIds && produto.categoryIds.length > 0) {
+        //     produto.categoryIds.forEach(catId => {
+        //         const checkbox = document.getElementById(`cat_${catId}`);
+        //         if (checkbox) checkbox.checked = true;
+        //     });
+        // }
+        document.getElementById(`cat_${produto.fkCategory}`).checked = true;
+
+        // Lógica visual para a imagem atual (Se existir)
+        if (produto.image) {
+            document.getElementById('fileName').textContent = `Imagem atual salva no sistema. Selecione outra para substituir.`;
+        }
+
+    } catch (error) {
+        alert("Erro ao carregar os dados do produto.");
+        console.error(error);
+    }
+}
+
+// Enviar o Formulário de Edição
 document.getElementById('productForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
     const saveBtn = document.getElementById('saveBtn');
+    
     saveBtn.disabled = true;
     saveBtn.textContent = 'Salvando...';
 
-    // Pega todas as categorias marcadas (Retorna um array de IDs)
     const checkedCategories = Array.from(document.querySelectorAll('input[name="categories"]:checked'))
                                    .map(cb => parseInt(cb.value));
 
     if (checkedCategories.length === 0) {
         alert("Selecione pelo menos uma categoria!");
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Salvar Produto';
+        saveBtn.textContent = 'Salvar Alterações';
         return;
     }
 
@@ -108,37 +158,38 @@ document.getElementById('productForm').addEventListener('submit', async function
     }
     // ==========================================
 
-    const novoProduto = {
-        Name: document.getElementById('name').value,
-        Description: document.getElementById('description').value,
-        Price: parseFloat(document.getElementById('price').value),
-        PromotionalPrice: parseFloat(promoPriceInput.value) ? parseFloat(promoPriceInput.value) : 0.1,
-        // PromotionalPrice: promoActiveCheckbox.checked ? parseFloat(promoPriceInput.value) : 0.0,
-        // PromotionalIsActive: promoActiveCheckbox.checked,
-        IsActive: true,
+    const produtoAtualizado = {
+        name: document.getElementById('name').value,
+        description: document.getElementById('description').value,
+        price: parseFloat(document.getElementById('price').value),
+        promotionalPrice: parseFloat(promoPriceInput.value) ? parseFloat(promoPriceInput.value) : 0.1,
+        // promotionalPrice: promoActiveCheckbox.checked ? parseFloat(promoPriceInput.value) : 0.0,
+        // promotionalIsActive: promoActiveCheckbox.checked,
+        categoryIds: checkedCategories[0],
         Image: urlDaImagemSalva,
-        CategoryIds: checkedCategories[0] // O C# vai receber essa lista para salvar na tabela intermediária
+        // O campo 'isActive' não enviamos aqui, ou enviamos conforme a regra do seu backend.
     };
 
     try {
-        const response = await fetch('http://localhost:5150/api/v1/products', {
-            method: 'POST',
+        // Atenção ao método PUT e a URL com o ID
+        const response = await fetch(`http://localhost:5150/api/v1/products/${productId}`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(novoProduto)
+            body: JSON.stringify(produtoAtualizado)
         });
 
         if (response.ok) {
-            alert('Produto cadastrado com sucesso!');
-            window.location.href = 'lista-produtos.html'; // Redireciona de volta
+            alert('Produto atualizado com sucesso!');
+            window.location.href = 'lista-produtos.html'; 
         } else {
-            alert('Erro ao cadastrar produto.');
+            alert('Erro ao atualizar produto.');
             saveBtn.disabled = false;
-            saveBtn.textContent = 'Salvar Produto';
+            saveBtn.textContent = 'Salvar Alterações';
         }
     } catch (error) {
         alert('Erro de conexão com o servidor.');
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Salvar Produto';
+        saveBtn.textContent = 'Salvar Alterações';
     }
 });
 

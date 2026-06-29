@@ -62,7 +62,7 @@ body {
 }
 
 button {
-    width: 100%;
+    /* width: 60%; */
     padding: 12px;
     background-color: #2563EB;
     color: white;
@@ -72,7 +72,7 @@ button {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 button:hover {
@@ -119,6 +119,24 @@ button:disabled {
     color: #1F2937;
 }
 
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #6B7280;
+    font-weight: 500;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #2563EB; /* Azul de destaque */
+    font-weight: 600;
+}
+
 .btn-text {
     background: none;
     border: none;
@@ -129,6 +147,19 @@ button:disabled {
 }
 
 .btn-text:hover {
+    text-decoration: underline;
+}
+
+.btn-text-menu {
+    background: none;
+    border: none;
+    color: #1F2937; /* Vermelho para sair */
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-text-menu:hover {
     text-decoration: underline;
 }
 
@@ -263,13 +294,14 @@ button:disabled {
     width: 48px;
     height: 48px;
     border-radius: 6px;
-    background-color: #F3F4F6;
-    object-fit: cover;
+    background-color: #FFFFFF; /* Fundo branco */
+    object-fit: contain; /* Troque de cover para contain aqui também */
+    padding: 2px; /* Respiro bem pequeno */
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    flex-shrink: 0; /* Impede a imagem de espremer se o nome for grande */
+    flex-shrink: 0;
     border: 1px solid #E5E7EB;
 }
 
@@ -518,13 +550,21 @@ textarea:focus {
 .product-image {
     width: 100%;
     height: 180px;
-    background-color: #F3F4F6;
+    
+    /* Fundo branco faz parecer fundo de estúdio se a foto for menor que o quadrado */
+    background-color: #FFFFFF; 
+    
+    /* A Mágica: Garante que a foto inteira apareça sem ser cortada e sem ser espremida */
+    object-fit: contain; 
+    
+    /* Um pequeno respiro para a imagem não grudar nas bordas do card */
+    padding: 15px; 
+    
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 40px;
     color: #9CA3AF;
-    object-fit: cover; /* Para quando a imagem real vier do backend */
 }
 
 /* Corpo do Card (Textos) */
@@ -633,4 +673,51 @@ textarea:focus {
 .produto-inativo {
     opacity: 0.6;
     filter: grayscale(100%);
+}
+
+/* --- Modal Categorias --- */
+
+/* === Estilos do Modal === */
+.modal-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+    z-index: 1000; /* Fica por cima de tudo */
+    justify-content: center;
+    align-items: center;
+    
+    /* Animação suave ao abrir */
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.modal-overlay.show {
+    display: flex; /* Muda para flex para centralizar o conteúdo */
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #FFFFFF;
+    padding: 24px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px);
+    transition: transform 0.2s ease-in-out;
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
 }
