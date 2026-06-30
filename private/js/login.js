@@ -31,6 +31,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             // Como ainda não temos JWT, vamos apenas redirecionar direto
             // Futuramente, é aqui que você vai pegar o token: const data = await response.json(); localStorage.setItem('token', data.token);
             window.location.href = 'dashboard-admin.html';
+            let dataTemp = await response.json()
+            sessionStorage.setItem("NAME_USER", dataTemp.name)
         } else {
             // 4. Erro (Ex: Senha incorreta retornou status 401 ou 400)
             errorMessage.style.display = 'block';
@@ -46,3 +48,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         loginBtn.textContent = 'Entrar';
     }
 });
+
+function clearSessionStorage() {
+    sessionStorage.clear()
+}

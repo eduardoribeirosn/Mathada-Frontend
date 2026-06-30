@@ -198,3 +198,13 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     // No futuro, aqui você apagaria o JWT: localStorage.removeItem('token');
     window.location.href = 'dashboard-admin.html'; // Volta para a dashboard inicial
 });
+
+function verifyLogin() {
+    let item = sessionStorage.getItem("NAME_USER")
+    if (!item) {
+        window.location.href = 'login.html'
+        setTimeout(() => {
+            alert("Para acessar esta tela, você deve estar logado!")
+        }, 50);
+    }
+}

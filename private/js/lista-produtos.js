@@ -219,3 +219,13 @@ async function salvarCategoria() {
         btnSalvar.textContent = 'Salvar';
     }
 }
+
+function verifyLogin() {
+    let item = sessionStorage.getItem("NAME_USER")
+    if (!item) {
+        window.location.href = 'login.html'
+        setTimeout(() => {
+            alert("Para acessar esta tela, você deve estar logado!")
+        }, 50);
+    }
+}

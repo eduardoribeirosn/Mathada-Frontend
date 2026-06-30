@@ -32,6 +32,8 @@ async function carregarDadosDoDashboard() {
 
         const ultimosProdutos = products.slice(-3).reverse(); 
 
+        document.getElementById('idName').textContent = sessionStorage.getItem("NAME_USER")
+
         ultimosProdutos.forEach(produto => {
             const li = document.createElement('li');
             
@@ -71,4 +73,15 @@ async function carregarDadosDoDashboard() {
 document.getElementById('logoutBtn').addEventListener('click', () => {
     // No futuro, aqui você apagaria o JWT: localStorage.removeItem('token');
     window.location.href = 'login.html'; // Volta para o login
+    sessionStorage.clear()
 });
+
+function verifyLogin() {
+    let item = sessionStorage.getItem("NAME_USER")
+    if (!item) {
+        window.location.href = 'login.html'
+        setTimeout(() => {
+            alert("Para acessar esta tela, você deve estar logado!")
+        }, 50);
+    }
+}

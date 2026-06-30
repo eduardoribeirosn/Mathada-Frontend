@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link rel="stylesheet" href="css/style-public.css">
+    <style>
+        /* CSS Extra exclusivo para a página do produto */
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .product-detail-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .detail-info h1 { font-size: 32px; margin-bottom: 20px; }
+        .detail-info .desc { color: #4B5563; line-height: 1.6; margin-bottom: 30px; font-size: 18px; }
+        .price-box { background: #FEF2F2; padding: 20px; border-radius: 8px; border-left: 4px solid #DC2626; }
+        
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="public-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo" style="text-decoration: none;">🛒 Mercado da Martha</a>
+            <nav>
+                <a href="index.html">Voltar para Ofertas</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="productContainer">
+            <p style="text-align: center; padding: 60px;">Carregando detalhes do produto...</p>
+        </div>
+    </main>
+
+    <script src="js/produto.js"></script>
+</body>
+</html>

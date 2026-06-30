@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Produtos - Mercado da Martha</title>
+    <link rel="stylesheet" href="css/style-public.css">
+</head>
+<body>
+
+    <header class="public-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo" style="text-decoration: none;">🛒 Mercado da Martha</a>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="produtos.html" style="color: #2563EB;">Todos os Produtos</a>
+                <a href="index.html#contato">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container section-padding shop-layout">
+        
+        <!-- Barra Lateral de Filtros -->
+        <aside class="sidebar-filtros">
+            <div class="filtro-card">
+                <h3>Categorias</h3>
+                <div id="listaCategoriasFiltro" class="filtro-opcoes">
+                    <p class="loading-text" style="font-size: 14px;">Carregando...</p>
+                    <!-- JS injeta os botões de rádio aqui -->
+                </div>
+            </div>
+
+            <div class="filtro-card">
+                <h3>Faixa de Preço</h3>
+                <div class="preco-inputs">
+                    <input type="number" id="precoMin" placeholder="R$ Min" min="0">
+                    <span>até</span>
+                    <input type="number" id="precoMax" placeholder="R$ Max" min="0">
+                </div>
+                <button id="btnFiltrarPreco" class="btn-filtrar">Aplicar Preço</button>
+            </div>
+            
+            <button id="btnLimparFiltros" class="btn-limpar" style="display: none;">Limpar Filtros</button>
+        </aside>
+
+        <!-- Vitrine de Produtos -->
+        <section class="shop-vitrine">
+            <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Catálogo</h2>
+            
+            <div class="public-product-grid" id="catalogoGrid">
+                <p class="loading-text" style="grid-column: 1 / -1;">Carregando catálogo...</p>
+                <!-- JS injeta os produtos aqui -->
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/produtos.js"></script>
+</body>
+</html>

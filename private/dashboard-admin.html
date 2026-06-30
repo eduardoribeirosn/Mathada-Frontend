@@ -6,7 +6,7 @@
     <title>Dashboard - Admin Mercado</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="admin-body">
+<body class="admin-body" onload="verifyLogin()">
 
     <header class="navbar">
         <div class="navbar-content">
@@ -25,7 +25,7 @@
     <main class="dashboard-container">
         
         <div class="welcome-header">
-            <h1>Olá, Agatha!</h1>
+            <h1>Olá, <span id="idName"></span>!</h1>
             <p>Aqui está o resumo do seu catálogo hoje.</p>
         </div>
 

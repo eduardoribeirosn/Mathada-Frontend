@@ -1,0 +1,309 @@
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F9FAFB;
+    color: #1F2937;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-padding {
+    padding: 60px 20px;
+}
+
+/* Header */
+.public-header {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    font-size: 24px;
+    color: #2563EB;
+}
+
+.public-header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #4B5563;
+    font-weight: 600;
+}
+
+/* Banner Hero */
+.hero-banner {
+    background-color: #2563EB;
+    color: #FFFFFF;
+    padding: 80px 20px;
+    text-align: center;
+    background-image: linear-gradient(rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.9)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-banner h2 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+/* Grid de Produtos */
+.section-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.public-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Card Público */
+.public-product-card {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    text-decoration: none; /* Porque o card inteiro é um link (<a>) */
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.public-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-wrapper {
+    height: 200px;
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Empurra os preços para o final do card */
+}
+
+.price-old {
+    font-size: 14px;
+    color: #9CA3AF;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.price-promo {
+    font-size: 24px;
+    color: #DC2626;
+    font-weight: 800;
+}
+
+/* Footer */
+.public-footer {
+    background-color: #1F2937;
+    color: #FFFFFF;
+    padding: 60px 20px;
+    margin-top: 40px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.contato-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contato-links a {
+    color: #60A5FA;
+    text-decoration: none;
+}
+
+/* =========================================
+   REGRAS DE RESPONSIVIDADE (CELULARES)
+   Tudo que estiver aqui dentro só acontece em telas pequenas
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Diminui o textão do banner para caber na tela */
+    .hero-banner {
+        padding: 50px 20px;
+    }
+    
+    .hero-banner h2 {
+        font-size: 28px; /* Era 40px */
+    }
+
+    /* 2. Coloca o rodapé em 1 coluna só (empilhando os contatos) */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center; /* Centraliza tudo para ficar mais bonito no celular */
+    }
+
+    /* 3. Ajusta o header se a tela for muito pequena */
+    .header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 15px;
+    }
+    
+    .public-header nav a {
+        margin: 0 10px; /* Junta um pouco os links */
+    }
+}
+
+/* =========================================
+   PÁGINA DE CATÁLOGO (TODOS OS PRODUTOS)
+   ========================================= */
+.shop-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* 250px pra barra lateral, o resto pros produtos */
+    gap: 40px;
+    align-items: start;
+}
+
+/* Sidebar de Filtros */
+.sidebar-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 90px; /* Faz os filtros acompanharem a rolagem da tela */
+}
+
+.filtro-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.filtro-card h3 {
+    font-size: 16px;
+    color: #1F2937;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #F3F4F6;
+    padding-bottom: 10px;
+}
+
+.filtro-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilo para os radio buttons parecerem botões clicáveis */
+.filtro-radio label {
+    display: block;
+    cursor: pointer;
+    font-size: 15px;
+    color: #4B5563;
+    padding: 5px 0;
+    transition: color 0.2s;
+}
+
+.filtro-radio input {
+    margin-right: 8px;
+    accent-color: #2563EB;
+}
+
+/* Filtro de Preço */
+.preco-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.preco-inputs input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.preco-inputs input:focus {
+    outline: none;
+    border-color: #2563EB;
+}
+
+.btn-filtrar {
+    width: 100%;
+    padding: 10px;
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-limpar {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Responsividade do Catálogo */
+@media (max-width: 768px) {
+    .shop-layout {
+        grid-template-columns: 1fr; /* Quebra para 1 coluna no celular */
+        gap: 20px;
+    }
+
+    .sidebar-filtros {
+        position: static; /* Remove o sticky no celular para não travar a tela */
+    }
+}
